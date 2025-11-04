@@ -1,12 +1,29 @@
 import mongoose from "mongoose";
 
+/**
+ * Connection caching for serverless environments.
+ * Keeps a reference on the global object to avoid creating
+ * new connections on each lambda/function invocation.
+ */
+const cached = global._mongoose || (global._mongoose = { conn: null, promise: null });
+
 const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
-    });
-    console.log("✅ MongoDB Connected:", conn.connection.host);
+    };
+    cached.promise = mongoose.connect(process.env.MONGO_URI, opts).then((m) => m.connection);
+  }
+
+  try {
+    cached.conn = await cached.promise;
+    console.log("✅ MongoDB Connected:", cached.conn.host || cached.conn.name);
+    return cached.conn;
   } catch (error) {
     console.error("⚠️  MongoDB Connection Error:", error.message);
     console.log("\n🔧 TROUBLESHOOTING STEPS:");
@@ -15,7 +32,7 @@ const connectDB = async () => {
     console.log("3. Click 'Add IP Address'");
     console.log("4. Click 'Allow Access from Anywhere' (0.0.0.0/0)");
     console.log("5. Restart the server\n");
-    process.exit(1);
+    throw error;
   }
 };
 
