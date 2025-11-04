@@ -10,6 +10,7 @@ import GradeAnalytics from './pages/GradeAnalytics'
 import Profile from './pages/Profile'
 import './App.css'
 
+
 function App() {
   return (
     <Router>
