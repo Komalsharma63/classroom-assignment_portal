@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import axios from 'axios'
+import { API_URL, API_BASE } from '../config'
 import { Users, GraduationCap, BookOpen, Settings, UserPlus, Trash2, Edit } from 'lucide-react'
 import '../App.css'
 
-const API_URL = 'http://localhost:5000/api'
+// API_URL now imported from ../config
 
 function AdminDashboard() {
   const navigate = useNavigate()

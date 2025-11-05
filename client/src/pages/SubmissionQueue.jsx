@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import '../App.css'
-
-const API_URL = 'http://localhost:5000/api'
+import { API_URL, API_BASE } from '../config'
 
 function SubmissionQueue() {
   const navigate = useNavigate()

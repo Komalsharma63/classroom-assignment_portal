@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import axios from 'axios'
+import { API_BASE } from '../config'
 import {  GraduationCap, BookOpen, Users, Award, TrendingUp, Clock, CheckCircle, BarChart } from 'lucide-react'
 import '../App.css'
 
@@ -28,7 +29,7 @@ function Home() {
     }
 
     // Test backend connection
-    axios.get('http://localhost:5000/')
+    axios.get(`${API_BASE}/`)
       .then(response => {
         setApiStatus('✅ Connected - ' + response.data.message)
         setLoading(false)
@@ -429,7 +430,7 @@ function Home() {
             </p>
             <p style={{opacity: 0.9, marginBottom: '2rem'}}>
               Backend URL: <code style={{background: 'rgba(255,255,255,0.2)', padding: '4px 12px', borderRadius: '6px'}}>
-                http://localhost:5000
+                {API_BASE}
               </code>
             </p>
             <div className="api-features">

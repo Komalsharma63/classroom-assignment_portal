@@ -4,7 +4,7 @@ import axios from 'axios'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import '../App.css'
 
-const API_URL = 'http://localhost:5000/api'
+import { API_URL, API_BASE } from '../config'
 
 const COLORS = ['#ef4444', '#f59e0b', '#fbbf24', '#84cc16', '#22c55e', '#10b981']
 
