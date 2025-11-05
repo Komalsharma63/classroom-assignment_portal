@@ -4,15 +4,15 @@
 services:
   - type: web
     name: classroom-assignment-backend
-    env: node
+    runtime: node
     branch: main
     region: oregon
     plan: free
     repo: https://github.com/Komalsharma63/TrainingProject.git
-    root: server
-    buildCommand: npm install
-    startCommand: npm start
-    # Non-secret defaults (you should set real values in Render's service settings)
+    # We don't use `root` here. Instead we run npm commands inside the `server` folder
+    buildCommand: npm --prefix server install
+    startCommand: npm --prefix server start
+    # Do NOT put real secrets here. Set them in the Render dashboard (Service → Environment).
     envVars:
       - key: NODE_ENV
         value: production
