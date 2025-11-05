@@ -1,8 +1,17 @@
 import express from "express";
+import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import connectDB from "./config/db.js";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
 
-// Export an Express app factory for both local start and serverless wrappers.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '.env') });
+connectDB();
 const app = express();
 
 app.use(express.json());
@@ -63,5 +72,5 @@ app.use("/api/comments", commentRoutes);
 // Serve uploaded files
 app.use("/uploads", express.static("uploads"));
 
-// Export app for serverless wrappers or a separate local starter.
-export default app;
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
